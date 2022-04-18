@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "axios": "^0.26.1",
+    "json-server": "^0.17.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
