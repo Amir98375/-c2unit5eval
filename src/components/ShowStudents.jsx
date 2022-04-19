@@ -3,6 +3,9 @@ import axios from 'axios'
 
 export const ShowStudents = () => {
   const [data,setData] = useState([]);
+  const [Sort,setSort] = useState("")
+  const [order,setOrder] = useState("")
+
   useEffect(()=>{
     getData()
   },[])
@@ -10,21 +13,117 @@ export const ShowStudents = () => {
     axios.get("http://localhost:8080/students").then((res)=>setData(res.data))
   } 
   const handleSort = () =>{
-    console.log('ok')
-  }
+    if(Sort=="first_name" && order=="asc"){
+      axios.get("http://localhost:8080/students").then((res)=>setData(
 
-  console.log(data)
+        res.data.sort(function(a, b) {
+          const nameA = a.first_name.toUpperCase(); 
+          const nameB = b.first_name.toUpperCase(); 
+          if (nameA < nameB) return -1;
+          if (nameA > nameB)  return 1;
+          })))
+        }
+      else if(Sort=="first_name" && order=="desc"){
+        axios.get("http://localhost:8080/students").then((res)=>setData(
+  
+          res.data.sort(function(a, b) {
+            const nameA = a.first_name.toUpperCase(); 
+            const nameB = b.first_name.toUpperCase(); 
+            if (nameA < nameB) return 1;
+            if (nameA > nameB)  return -1;
+            })))
+          }
+          else if(Sort=="email" && order=="asc"){
+            axios.get("http://localhost:8080/students").then((res)=>setData(
+      
+              res.data.sort(function(a, b) {
+                const nameA = a.email.toUpperCase(); 
+                const nameB = b.email.toUpperCase(); 
+                if (nameA < nameB) return 1;
+                if (nameA > nameB)  return -1;
+                })))
+              }
+              else if(Sort=="email" && order=="desc"){
+                axios.get("http://localhost:8080/students").then((res)=>setData(
+          
+                  res.data.sort(function(a, b) {
+                    const nameA = a.email.toUpperCase(); 
+                    const nameB = b.email.toUpperCase(); 
+                    if (nameA < nameB) return -1;
+                    if (nameA > nameB)  return 1;
+                    })))
+                  }  
+
+                  else if(Sort=="gender" && order=="asc"){
+                    axios.get("http://localhost:8080/students").then((res)=>setData(
+              
+                      res.data.sort(function(a, b) {
+                        const nameA = a.gender.toUpperCase(); 
+                        const nameB = b.gender.toUpperCase(); 
+                        if (nameA < nameB) return 1;
+                        if (nameA > nameB)  return -1;
+                        })))
+                      } 
+
+
+                      else if(Sort=="gender" && order=="desc"){
+                        axios.get("http://localhost:8080/students").then((res)=>setData(
+                  
+                          res.data.sort(function(a, b) {
+                            const nameA = a.gender.toUpperCase(); 
+                            const nameB = b.gender.toUpperCase(); 
+                            if (nameA < nameB) return -1;
+                            if (nameA > nameB)  return 1;
+                            })))
+                          }
+
+                     
+                          else if(Sort=="tenth_score" && order=="desc"){
+                            axios.get("http://localhost:8080/students").then((res)=>setData(
+                      
+                              res.data.sort(function(a, b) {
+                               return b.tenth_score-a.tenth_score;
+                                })))
+                              }   
+                              else if(Sort=="tenth_score" && order=="asc"){
+                                axios.get("http://localhost:8080/students").then((res)=>setData(
+                          
+                                  res.data.sort(function(a, b) {
+                                   return a.tenth_score-b.tenth_score;
+                                    })))
+                                  }    
+            
+                                  else if(Sort=="twelth_score" && order=="asc"){
+                                    axios.get("http://localhost:8080/students").then((res)=>setData(
+                              
+                                      res.data.sort(function(a, b) {
+                                       return a.twelth_score-twelth_score;
+                                        })))
+                                      }
+                     
+          
+    else if(Sort =="twelth_score" && order=="desc"){
+      axios.get("http://localhost:8080/students").then((res)=>setData(res.data.sort((a,b)=>{
+        return b.twelth_score - a.twelth_score;
+        })))
+    }
+  }
+  
+
+
+  console.log(Sort,order)
   return (
     <div>
       <div className="controls">
         <div>
           Sort By:{" "}
-          <select
+          <select onChange={(e)=>{setSort(e.target.value)}}
             // select dropdown needs both value and onChange
             className="sortby"
           >
             <option value="first_name">First Name</option>
             <option value="gender">Gender</option>
+            <option value="email">Email</option>
             <option value="age">Age</option>
             <option value="tenth_score">10th Score</option>
             <option value="twelth_score">12th Score</option>
@@ -32,7 +131,7 @@ export const ShowStudents = () => {
         </div>
         <div>
           Order:
-          <select
+          <select onChange={(e)=>{setOrder(e.target.value)}}
             // select dropdown needs both value and onChange
             className="sortorder"
           >
